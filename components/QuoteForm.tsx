@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Send, CheckCircle2, Calendar, MapPin, User, Mail, Phone, FileText } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Calendar, MapPin, User, Mail, Phone, FileText } from "lucide-react";
 
 export const serviceOptions = [
   "House Removals",
@@ -34,19 +34,43 @@ export default function QuoteForm() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [minDate, setMinDate] = useState<string>("");
 
   useEffect(() => {
     setMinDate(new Date().toISOString().split("T")[0]);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          formSource: "Quote Request Form",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(
+          result?.error || "Unable to submit your request right now. Please try calling us directly."
+        );
+        return;
+      }
+
       setIsSubmitted(true);
-    }, 900);
+    } catch {
+      setErrorMessage("Network error. Please check your connection or call us on 020 8858 4684.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -249,6 +273,16 @@ export default function QuoteForm() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all text-sm font-medium text-navy-900 bg-gray-50/50 focus:bg-white resize-y"
                 />
               </div>
+
+              {errorMessage && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-2.5 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm font-medium"
+                >
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
 
               {/* Submit Button */}
               <div className="pt-2">
