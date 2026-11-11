@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-plus-jakarta);
+}
+
+body {
+  color: #121F36;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Badge styling matching live site */
+.site-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(199, 165, 103, 0.12);
+  color: #C7A567;
+  border: 1px solid rgba(199, 165, 103, 0.25);
+}
+
+/* Gold button gradient effect */
+.btn-gold {
+  background: linear-gradient(135deg, #C7A567 0%, #B89352 100%);
+  color: #0C1726;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, #d4b375 0%, #C7A567 100%);
+  box-shadow: 0 4px 14px rgba(199, 165, 103, 0.35);
+  transform: translateY(-1px);
+}
