@@ -11,9 +11,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://stressfreemoveltd.co.uk"),
-  title: "Stress Free Move Limited | Professional Removals & Moving Services",
+  title: {
+    default: "Stress Free Move Limited | Professional Removals & Moving Services",
+    template: "%s | Stress Free Move Limited",
+  },
   description:
-    "Stress Free Move Limited provides reliable, professional house removals, office relocations, storage solutions, and man and van moving services across London and nationwide in the UK.",
+    "Stress Free Move Limited provides reliable, fully insured house removals, office relocations, storage solutions, and man & van moving services across London and nationwide in the UK. Rated 4.9★ on Trustpilot.",
   keywords: [
     "house removals",
     "office removals",
@@ -22,17 +25,55 @@ export const metadata: Metadata = {
     "storage solutions",
     "croydon removals",
     "london moving company",
+    "uk removals",
+    "packing services",
   ],
+  authors: [{ name: "Stress Free Move Limited", url: "https://stressfreemoveltd.co.uk" }],
+  creator: "Stress Free Move Limited",
+  publisher: "Stress Free Move Limited",
+  formatDetection: {
+    email: false,
+    address: true,
+    telephone: true,
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Stress Free Move Limited | Professional Removals & Moving Services",
     description:
-      "Reliable, fully insured house removals, office relocations, storage solutions, and man & van services across London and the UK.",
-    type: "website",
-    locale: "en_GB",
+      "Reliable, fully insured house removals, office relocations, storage solutions, and man & van services across London and nationwide in the UK. Rated 4.9★ on Trustpilot.",
+    url: "https://stressfreemoveltd.co.uk",
     siteName: "Stress Free Move Limited",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1080,
+        height: 1350,
+        type: "image/jpeg",
+        alt: "Stress Free Move Limited - Stress-Free Moves, Handled With Care",
+      },
+      {
+        url: "/images/og-image.png",
+        width: 1080,
+        height: 1350,
+        type: "image/png",
+        alt: "Stress Free Move Limited - Stress-Free Moves, Handled With Care",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stress Free Move Limited | Professional Removals & Moving Services",
+    description:
+      "Reliable, fully insured house removals, office relocations, storage solutions, and man & van services across London and nationwide in the UK.",
+    images: ["/images/og-image.jpg"],
   },
   icons: {
     icon: "/images/logo.png",
+    apple: "/images/logo.png",
   },
 };
 
