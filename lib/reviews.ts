@@ -13,7 +13,7 @@ export { SYNC_INTERVAL_MS, DEFAULT_REVIEWS_DATA };
 
 const CACHE_FILE_PATH = path.join(process.cwd(), "data", "reviews-cache.json");
 const FETCH_TIMEOUT_MS = 6000;
-const FORCE_SYNC_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
+const FORCE_SYNC_COOLDOWN_MS = 10 * 1000; // 10 seconds (allows manual sync on demand)
 let memoryCache: any = null;
 
 /**
@@ -176,15 +176,15 @@ export async function fetchLiveTrustpilot(): Promise<{
 
     const html = await res.text();
     const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i);
-    let parsedScore = "4.1";
-    let parsedCount = 5;
+    let parsedScore = DEFAULT_REVIEWS_DATA.trustpilot.score;
+    let parsedCount = DEFAULT_REVIEWS_DATA.trustpilot.reviewCount;
 
     if (jsonLdMatch) {
       try {
         const data = JSON.parse(jsonLdMatch[1]);
         if (data.aggregateRating) {
-          parsedScore = data.aggregateRating.ratingValue?.toString() || "4.1";
-          parsedCount = parseInt(data.aggregateRating.reviewCount || "5", 10);
+          parsedScore = data.aggregateRating.ratingValue?.toString() || DEFAULT_REVIEWS_DATA.trustpilot.score;
+          parsedCount = parseInt(data.aggregateRating.reviewCount || `${DEFAULT_REVIEWS_DATA.trustpilot.reviewCount}`, 10);
         }
       } catch {
         // ignore parse error
@@ -249,8 +249,8 @@ export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
               : DEFAULT_REVIEWS_DATA.getamover.reviews,
         },
         trustpilot: {
-          score: tpData.score || "4.1",
-          reviewCount: tpData.reviewCount || tpData.reviews?.length || 5,
+          score: tpData.score || DEFAULT_REVIEWS_DATA.trustpilot.score,
+          reviewCount: tpData.reviewCount || tpData.reviews?.length || DEFAULT_REVIEWS_DATA.trustpilot.reviewCount,
           profileUrl: DEFAULT_REVIEWS_DATA.trustpilot.profileUrl,
           evaluateUrl: DEFAULT_REVIEWS_DATA.trustpilot.evaluateUrl,
           reviews:
@@ -306,7 +306,7 @@ export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
     nextSyncAt: nextSync,
     syncIntervalDays: 2,
     totalReviews,
-    averageRating: 4.8,
+    averageRating: 4.9,
     getamover: {
       score: finalCache.getamover?.score || "9.9",
       reviewCount: finalCache.getamover?.reviewCount || gamReviews.length,
@@ -314,7 +314,7 @@ export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
       reviews: gamReviews,
     },
     trustpilot: {
-      score: finalCache.trustpilot?.score || "4.1",
+      score: finalCache.trustpilot?.score || DEFAULT_REVIEWS_DATA.trustpilot.score,
       reviewCount: finalCache.trustpilot?.reviewCount || tpReviews.length,
       profileUrl: DEFAULT_REVIEWS_DATA.trustpilot.profileUrl,
       evaluateUrl: DEFAULT_REVIEWS_DATA.trustpilot.evaluateUrl,

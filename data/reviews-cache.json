@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-11-12T15:34:39.787Z",
+  "lastSyncedAt": "2026-11-14T15:55:00.000Z",
   "getamover": {
     "score": "9.9",
     "reviewCount": 9,
@@ -107,16 +107,126 @@
     ]
   },
   "trustpilot": {
-    "score": "4.1",
-    "reviewCount": 5,
+    "score": "4.5",
+    "reviewCount": 14,
     "profileUrl": "https://uk.trustpilot.com/review/stressfreemoveltd.co.uk",
     "evaluateUrl": "https://uk.trustpilot.com/evaluate/stressfreemoveltd.co.uk",
     "reviews": [
       {
         "id": "tp-1",
+        "author": "Sadek Al Rikaby",
+        "headline": "Very good and expert",
+        "date": "14 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Very good and expert",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-2",
+        "author": "David Miedzianogora",
+        "headline": "Ali was great and very helpful",
+        "date": "10 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Ali was great and very helpful. Efficient move. Happy with everything",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-3",
+        "author": "Nj Sofia",
+        "headline": "Stressfreemove was an amazing company…",
+        "date": "31 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Stressfreemove was an amazing company to move with. They were really efficient and helpful and I really recommend. There were no scratches and it was all stress free with everything cared for. The people working were amazing and trust worthy so don’t hesitate to pick this company.",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-4",
+        "author": "Chi",
+        "headline": "Very good service",
+        "date": "1 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Very good service! They are really patient as well",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-5",
+        "author": "Dan Pearson",
+        "headline": "Very accommodating service",
+        "date": "31 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Very accommodating service, quick service and great price. Moving with a smile :) thank you",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-6",
+        "author": "Andrew Noonan",
+        "headline": "Moved from house to flat with no log…",
+        "date": "31 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Moved from house to flat with no log and lots of stairs. On time and great price. No issues at all. Will use again. Thank you!",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-7",
+        "author": "Malia",
+        "headline": "Quick and easy move",
+        "date": "30 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Quick and easy move, stress free :)",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-8",
+        "author": "Matthew Williams",
+        "headline": "Great job",
+        "date": "30 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Great job, quick and easy. Good price",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-9",
+        "author": "Mark",
+        "headline": "Incredibly stress free as the name…",
+        "date": "29 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Incredibly stress free as the name suggests, didn’t have to lift a finger and very trustworthy",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-10",
+        "author": "Punky C",
+        "headline": "Great service!!",
+        "date": "17 Oct 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Great service!!! Super fast, took care of all our belongings and the team was just all around amazing!!!",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-11",
         "author": "Jenny Nichols-Dunbar",
-        "headline": "First class experience",
-        "date": "Oct 2026",
+        "headline": "Wonderful experience",
+        "date": "24 Oct 2026",
         "rating": 5,
         "ratingOutOf10": 10,
         "text": "Excellent experience, efficient and quick really friendly and hardworking. Thoroughly recommend them such nice men, first class.",
@@ -124,21 +234,21 @@
         "verified": true
       },
       {
-        "id": "tp-2",
+        "id": "tp-12",
         "author": "J Nichols-Dunbar",
-        "headline": "Brilliant service from start to finish",
-        "date": "Oct 2026",
+        "headline": "Absolutely wonderful and excellent…",
+        "date": "24 Oct 2026",
         "rating": 5,
         "ratingOutOf10": 10,
-        "text": "Absolutely wonderful and excellent service from start to finish from this company. Ali and his assistant Khan were brilliant would definitely recommend them to anyone else who's looking to move.",
+        "text": "Absolutely wonderful and excellent service from start to finish from this company. Ali and his assistant Khan were brilliant would definitely recommend them to anyone else who's looking too move.",
         "source": "Trustpilot",
         "verified": true
       },
       {
-        "id": "tp-3",
+        "id": "tp-13",
         "author": "Brittany Perry",
-        "headline": "Accommodating, kind, and helpful!",
-        "date": "Oct 2026",
+        "headline": "They were amazing!!",
+        "date": "22 Oct 2026",
         "rating": 5,
         "ratingOutOf10": 10,
         "text": "They were amazing!!! Helped me move out of second floor flat with no lift into a house with a lot of stairs! They were so accommodating, kind, and helpful!",
@@ -146,24 +256,13 @@
         "verified": true
       },
       {
-        "id": "tp-4",
+        "id": "tp-14",
         "author": "SANDRA WOODARDS",
-        "headline": "Care and consideration - amazing",
-        "date": "Oct 2026",
+        "headline": "Excellent service by two movers who…",
+        "date": "22 Oct 2026",
         "rating": 5,
         "ratingOutOf10": 10,
-        "text": "Excellent service by two movers who were polite considerate and nothing was too much trouble. Arrived on time packed and unpacked all my furniture with care and consideration. Would recommend and use them again. Amazing.",
-        "source": "Trustpilot",
-        "verified": true
-      },
-      {
-        "id": "tp-5",
-        "author": "Verified Customer",
-        "headline": "Careful and efficient move",
-        "date": "Oct 2026",
-        "rating": 5,
-        "ratingOutOf10": 10,
-        "text": "Stress Free Move Limited lived up to their name. Arrived promptly, protected our carpets and banisters, and got everything safely unloaded into our new home.",
+        "text": "Excellent service by two movers who were polite considerate and nothing was too much ttouble. Arrived on time packed and unpacked all my furniture with care and.consideration. would recommend and use them again. Amazing",
         "source": "Trustpilot",
         "verified": true
       }
