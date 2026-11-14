@@ -12,6 +12,7 @@ export default function ServicesHero() {
           alt="Services"
           fill
           priority
+          sizes="100vw"
           className="object-cover object-top"
         />
         {/* Dark Overlay - 60% opacity matching Elementor */}

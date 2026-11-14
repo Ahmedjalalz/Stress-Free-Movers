@@ -26,6 +26,7 @@ export default function ServiceDetailBanner({
           src={bgImage}
           alt={heading}
           fill
+          sizes="100vw"
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-[#0C1726]/80 backdrop-brightness-75 pointer-events-none" />

@@ -24,6 +24,7 @@ export default function MovingMadeSimple() {
                   src="/images/business-team-1.jpg"
                   alt="Stress Free Move team preparing removals"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 512px"
                   className="object-cover"
                 />
               </div>
@@ -34,19 +35,20 @@ export default function MovingMadeSimple() {
                   src="/images/business-team-2.jpg"
                   alt="Professional moving boxes and equipment"
                   fill
+                  sizes="(max-width: 1024px) 75vw, 384px"
                   className="object-cover"
                 />
 
                 {/* Concentric Golden Ripple Effect */}
-                <div className="absolute -bottom-6 -left-6 z-20 pointer-events-none">
+                <div className="absolute -bottom-6 -left-6 z-20 pointer-events-none" aria-hidden="true">
                   <div className="relative w-14 h-14">
-                    {[0, 1, 2, 3, 4, 5].map((idx) => (
+                    {[0, 1, 2].map((idx) => (
                       <span
                         key={idx}
                         className="absolute inset-0 rounded-full border border-gold animate-ping opacity-75"
                         style={{
-                          animationDuration: "4s",
-                          animationDelay: `${idx * 0.7}s`,
+                          animationDuration: "3.5s",
+                          animationDelay: `${idx * 1.1}s`,
                         }}
                       />
                     ))}

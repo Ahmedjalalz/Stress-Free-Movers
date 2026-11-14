@@ -67,6 +67,7 @@ export default function ServiceDetailWhyChoose({
                   src={highlightImage}
                   alt={highlightTitle}
                   fill
+                  sizes="96px"
                   className="object-cover"
                 />
               </div>

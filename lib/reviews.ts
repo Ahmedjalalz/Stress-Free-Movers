@@ -12,6 +12,9 @@ export type { Review, PlatformStats, ReviewsData };
 export { SYNC_INTERVAL_MS, DEFAULT_REVIEWS_DATA };
 
 const CACHE_FILE_PATH = path.join(process.cwd(), "data", "reviews-cache.json");
+const FETCH_TIMEOUT_MS = 6000;
+const FORCE_SYNC_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
+let memoryCache: any = null;
 
 /**
  * Fetch live review stats & customer reviews from Getamover
@@ -32,6 +35,7 @@ export async function fetchLiveGetamover(): Promise<{
           Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
         cache: "no-store",
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       }
     );
 
@@ -56,6 +60,7 @@ export async function fetchLiveGetamover(): Promise<{
           Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
         cache: "no-store",
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       }
     );
 
@@ -160,6 +165,7 @@ export async function fetchLiveTrustpilot(): Promise<{
           "Accept-Language": "en-GB,en;q=0.9",
         },
         cache: "no-store",
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       }
     );
 
@@ -200,15 +206,18 @@ export async function fetchLiveTrustpilot(): Promise<{
  * Reads cache, checks if lastSyncedAt > 48h, triggers sync if needed, and writes back.
  */
 export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
-  let cache: any = null;
+  let cache: any = memoryCache;
 
-  try {
-    if (fs.existsSync(CACHE_FILE_PATH)) {
-      const content = fs.readFileSync(CACHE_FILE_PATH, "utf8");
-      cache = JSON.parse(content);
+  if (!cache) {
+    try {
+      if (fs.existsSync(CACHE_FILE_PATH)) {
+        const content = fs.readFileSync(CACHE_FILE_PATH, "utf8");
+        cache = JSON.parse(content);
+        memoryCache = cache;
+      }
+    } catch (err) {
+      console.error("[Reviews Sync] Could not read cache file:", err);
     }
-  } catch (err) {
-    console.error("[Reviews Sync] Could not read cache file:", err);
   }
 
   const now = Date.now();
@@ -216,8 +225,9 @@ export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
     ? new Date(cache.lastSyncedAt).getTime()
     : 0;
   const isExpired = now - lastSyncTime > SYNC_INTERVAL_MS;
+  const canForceSync = forceSync && now - lastSyncTime > FORCE_SYNC_COOLDOWN_MS;
 
-  if (isExpired || forceSync || !cache) {
+  if (isExpired || canForceSync || !cache) {
     try {
       const [liveGam, liveTp] = await Promise.all([
         fetchLiveGetamover(),
@@ -257,9 +267,11 @@ export async function getReviewsData(forceSync = false): Promise<ReviewsData> {
         }
         fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(newCache, null, 2), "utf8");
         cache = newCache;
+        memoryCache = newCache;
       } catch (writeErr) {
         console.error("[Reviews Sync] Failed to write cache:", writeErr);
         cache = newCache;
+        memoryCache = newCache;
       }
     } catch (syncErr) {
       console.error("[Reviews Sync] Sync operation failed:", syncErr);

@@ -30,6 +30,7 @@ export default function QuoteForm() {
     email: "",
     phone: "",
     notes: "",
+    website: "",
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -118,6 +119,7 @@ export default function QuoteForm() {
                     email: "",
                     phone: "",
                     notes: "",
+                    website: "",
                   });
                 }}
                 className="btn-gold px-6 py-2.5 rounded-lg text-sm font-bold"
@@ -127,16 +129,35 @@ export default function QuoteForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot field for bot protection */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="quote-website">Website</label>
+                <input
+                  id="quote-website"
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={(e) =>
+                    setFormData({ ...formData, website: e.target.value })
+                  }
+                />
+              </div>
+
               {/* Row 1: Pick up & Drop off Postcodes */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-pickup" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <MapPin className="w-4 h-4 text-gold" />
                     Pick up *
                   </label>
                   <input
+                    id="quote-pickup"
                     type="text"
                     required
+                    maxLength={20}
+                    autoComplete="postal-code"
                     placeholder="Post code"
                     value={formData.pickupPostcode}
                     onChange={(e) =>
@@ -147,13 +168,16 @@ export default function QuoteForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-dropoff" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <MapPin className="w-4 h-4 text-gold" />
                     Drop off *
                   </label>
                   <input
+                    id="quote-dropoff"
                     type="text"
                     required
+                    maxLength={20}
+                    autoComplete="postal-code"
                     placeholder="Post code"
                     value={formData.dropoffPostcode}
                     onChange={(e) =>
@@ -167,11 +191,12 @@ export default function QuoteForm() {
               {/* Row 2: Moving Date & Service selection */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-date" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Calendar className="w-4 h-4 text-gold" />
                     Moving date
                   </label>
                   <input
+                    id="quote-date"
                     type="date"
                     min={minDate || undefined}
                     value={formData.moveDate}
@@ -183,11 +208,12 @@ export default function QuoteForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-service" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <FileText className="w-4 h-4 text-gold" />
                     Moving service *
                   </label>
                   <select
+                    id="quote-service"
                     required
                     value={formData.service}
                     onChange={(e) =>
@@ -207,13 +233,16 @@ export default function QuoteForm() {
               {/* Row 3: Full Name, Email, Phone */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-name" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <User className="w-4 h-4 text-gold" />
                     Full name *
                   </label>
                   <input
+                    id="quote-name"
                     type="text"
                     required
+                    maxLength={120}
+                    autoComplete="name"
                     placeholder="Full name"
                     value={formData.fullName}
                     onChange={(e) =>
@@ -224,13 +253,16 @@ export default function QuoteForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-email" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Mail className="w-4 h-4 text-gold" />
                     Email *
                   </label>
                   <input
+                    id="quote-email"
                     type="email"
                     required
+                    maxLength={254}
+                    autoComplete="email"
                     placeholder="Email"
                     value={formData.email}
                     onChange={(e) =>
@@ -241,13 +273,16 @@ export default function QuoteForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <label htmlFor="quote-phone" className="text-xs font-bold text-navy-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Phone className="w-4 h-4 text-gold" />
                     Phone Number *
                   </label>
                   <input
+                    id="quote-phone"
                     type="tel"
                     required
+                    maxLength={30}
+                    autoComplete="tel"
                     placeholder="Phone Number"
                     value={formData.phone}
                     onChange={(e) =>
@@ -260,11 +295,13 @@ export default function QuoteForm() {
 
               {/* Row 4: Additional Notes */}
               <div>
-                <label className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2">
+                <label htmlFor="quote-notes" className="block text-xs font-bold text-navy-800 uppercase tracking-wider mb-2">
                   Additional notes
                 </label>
                 <textarea
+                  id="quote-notes"
                   rows={3}
+                  maxLength={3000}
                   placeholder="List of items , Assembly Service , Packing Service , Packing Materials"
                   value={formData.notes}
                   onChange={(e) =>

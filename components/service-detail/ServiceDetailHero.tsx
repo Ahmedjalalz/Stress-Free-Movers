@@ -19,6 +19,7 @@ export default function ServiceDetailHero({
           alt={title}
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center"
         />
         {/* Dark Overlay - 60% opacity matching original design */}

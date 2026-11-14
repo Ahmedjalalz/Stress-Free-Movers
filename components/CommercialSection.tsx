@@ -77,6 +77,7 @@ export default function CommercialSection() {
                   src="/images/business-team-1.jpg"
                   alt="Stress Free Move professional commercial movers"
                   fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -87,6 +88,7 @@ export default function CommercialSection() {
                   src="/images/business-team-2.jpg"
                   alt="Office relocation equipment and packing"
                   fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>

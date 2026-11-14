@@ -1,6 +1,6 @@
 import { getReviewsData } from "@/lib/reviews";
 
-export const revalidate = 172800; // 2 days in seconds
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
@@ -15,9 +15,10 @@ export async function GET(request: Request) {
         "Cache-Control": "public, s-maxage=172800, stale-while-revalidate=86400",
       },
     });
-  } catch (error: any) {
+  } catch (error) {
+    console.error("[Reviews API] Error retrieving reviews:", error);
     return Response.json(
-      { error: "Failed to retrieve reviews", message: error?.message },
+      { error: "Failed to retrieve reviews" },
       { status: 500 }
     );
   }

@@ -69,7 +69,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "packing-and-moving",
       title: "Packing and Moving",
       description:
-        "One sofa, one wardrobe, one appliance — collected and delivered without paying for a full removal.",
+        "Full or partial packing using quality boxes, bubble wrap, tissue and tape, with everything clearly labelled.",
       icon: Package,
     },
     {
@@ -77,7 +77,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "loading-unloading-solutions",
       title: "Loading & Unloading Solutions",
       description:
-        "Full or partial packing using quality boxes, bubble wrap, tissue and tape, with everything clearly labelled.",
+        "Trained movers to safely load, secure and unload your hire van, container or storage unit with care.",
       icon: Layers,
     },
   ],
@@ -88,7 +88,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "local-moving",
       title: "Local Moving",
       description:
-        "Boxes, wrap, covers and tape delivered to your door if you'd prefer to pack yourself.",
+        "Fast, reliable same-day and short-distance moves across Croydon, London and surrounding areas.",
       icon: MapPin,
     },
     {
@@ -104,7 +104,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "piano-removals",
       title: "Piano Removals",
       description:
-        "Short-term and long-term storage for furniture and boxes when your dates don't line up perfectly.",
+        "Specialist upright and grand piano transport using protective covers, skids and trained handlers.",
       icon: Music,
     },
   ],
@@ -115,7 +115,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "junk-removal",
       title: "Junk Removal",
       description:
-        "Boxes, wrap, covers and tape delivered to your door if you'd prefer to pack yourself.",
+        "Responsible clearance and eco-friendly disposal of unwanted furniture, appliances and household clutter.",
       icon: Trash2,
     },
     {
@@ -123,7 +123,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "furniture-assembly",
       title: "Furniture Assembly",
       description:
-        "Cross-country relocations planned end to end, including overnight and multi-drop journeys.",
+        "Careful dismantling and reassembly of beds, wardrobes, desks and flat-pack furniture in your new space.",
       icon: Bed,
     },
     {
@@ -131,7 +131,7 @@ const serviceRows: ServiceItem[][] = [
       slug: "cleaning-services",
       title: "Cleaning Services",
       description:
-        "Short-term and long-term storage for furniture and boxes when your dates don't line up perfectly.",
+        "Thorough end-of-tenancy, deep home and post-move office cleaning to leave every property spotless.",
       icon: Sparkles,
     },
   ],

@@ -12,6 +12,7 @@ export default function AboutHero() {
           alt="About Stress Free Move Limited"
           fill
           priority
+          sizes="100vw"
           className="object-cover object-top"
         />
         {/* Dark Overlay - 60% opacity matching Elementor */}

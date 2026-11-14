@@ -9,27 +9,103 @@ import {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const ipRequestLog = new Map<string, number[]>();
+
+function getClientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    return forwarded.split(",")[0].trim() || "unknown";
+  }
+  return request.headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+
+  // Periodic cleanup to prevent unbounded memory growth
+  if (ipRequestLog.size > 1000) {
+    for (const [key, timestamps] of Array.from(ipRequestLog.entries())) {
+      const recent = timestamps.filter((ts) => ts > windowStart);
+      if (recent.length === 0) {
+        ipRequestLog.delete(key);
+      } else {
+        ipRequestLog.set(key, recent);
+      }
+    }
+  }
+
+  const timestamps = (ipRequestLog.get(ip) || []).filter((ts) => ts > windowStart);
+  if (timestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+    ipRequestLog.set(ip, timestamps);
+    return true;
+  }
+
+  timestamps.push(now);
+  ipRequestLog.set(ip, timestamps);
+  return false;
+}
+
+function sanitizeSingleLine(value: unknown, maxLength: number): string {
+  return String(value ?? "")
+    .replace(/[\r\n\t\x00-\x1f\x7f]+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+}
+
+function sanitizeMultiLine(value: unknown, maxLength: number): string {
+  return String(value ?? "")
+    .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+/g, "")
+    .trim()
+    .slice(0, maxLength);
+}
+
 export async function POST(request: Request) {
   try {
+    const clientIp = getClientIp(request);
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a few minutes or call us on 020 8858 4684." },
+        { status: 429 }
+      );
+    }
+
     const apiKey = process.env.RESEND_API_KEY?.trim();
     if (!apiKey) {
+      console.error("[Contact API] Missing RESEND_API_KEY configuration.");
       return NextResponse.json(
-        { error: "Email service is not configured (missing RESEND_API_KEY)." },
+        { error: "Email service is temporarily unavailable. Please call us on 020 8858 4684." },
         { status: 500 }
       );
     }
 
-    const body = await request.json();
+    let body: Record<string, unknown>;
+    try {
+      const parsed = await request.json();
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
+      }
+      body = parsed as Record<string, unknown>;
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
+    }
 
-    const fullName = String(body.fullName || "").trim();
-    const email = String(body.email || "").trim();
-    const phone = String(body.phone || "").trim();
-    const service = String(body.service || "House Removals").trim();
-    const pickupPostcode = String(body.pickupPostcode || "").trim();
-    const dropoffPostcode = String(body.dropoffPostcode || "").trim();
-    const moveDate = body.moveDate ? String(body.moveDate).trim() : "";
-    const notes = body.notes ? String(body.notes).trim() : "";
-    const formSource = String(body.formSource || "Website Enquiry").trim();
+    // Honeypot check: bots filling hidden field get a silent 200 without sending mail
+    if (body.website && String(body.website).trim() !== "") {
+      return NextResponse.json({ success: true, id: null }, { status: 200 });
+    }
+
+    const fullName = sanitizeSingleLine(body.fullName, 120);
+    const email = sanitizeSingleLine(body.email, 254);
+    const phone = sanitizeSingleLine(body.phone, 30);
+    const service = sanitizeSingleLine(body.service || "House Removals", 100) || "House Removals";
+    const pickupPostcode = sanitizeSingleLine(body.pickupPostcode, 20);
+    const dropoffPostcode = sanitizeSingleLine(body.dropoffPostcode, 20);
+    const moveDate = sanitizeSingleLine(body.moveDate, 30);
+    const notes = sanitizeMultiLine(body.notes, 3000);
+    const formSource = sanitizeSingleLine(body.formSource || "Website Enquiry", 80) || "Website Enquiry";
 
     if (!fullName || !email || !phone || !pickupPostcode || !dropoffPostcode) {
       return NextResponse.json(
@@ -85,7 +161,7 @@ export async function POST(request: Request) {
     if (error) {
       console.error("[Contact API] Resend error:", error);
       return NextResponse.json(
-        { error: error.message || "Failed to send email via Resend." },
+        { error: "Unable to send your enquiry right now. Please try again or call 020 8858 4684." },
         { status: 502 }
       );
     }
@@ -96,7 +172,7 @@ export async function POST(request: Request) {
         from: `Stress Free Move Limited <${fromAddress}>`,
         to: [email],
         replyTo: toAddress,
-        subject: `We've received your moving quote request - Stress Free Move Limited`,
+        subject: "We've received your moving quote request - Stress Free Move Limited",
         html: buildCustomerConfirmationHtml(payload),
       });
     } catch (confirmErr) {
@@ -107,7 +183,7 @@ export async function POST(request: Request) {
       { success: true, id: data?.id || null },
       { status: 200 }
     );
-  } catch (err: any) {
+  } catch (err) {
     console.error("[Contact API] Unexpected error:", err);
     return NextResponse.json(
       { error: "Something went wrong while submitting your request. Please try again." },

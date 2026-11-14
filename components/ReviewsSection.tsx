@@ -75,6 +75,8 @@ export default function ReviewsSection({ initialData }: ReviewsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const syncTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Filter reviews based on active tab
   const filteredReviews: Review[] = React.useMemo(() => {
@@ -94,14 +96,20 @@ export default function ReviewsSection({ initialData }: ReviewsSectionProps) {
     setCurrentIndex(0);
   }, [activeTab]);
 
-  // Auto-advance carousel every 7 seconds
+  // Auto-advance carousel every 7 seconds (paused while user hovers or focuses)
   useEffect(() => {
-    if (filteredReviews.length <= 1) return;
+    if (filteredReviews.length <= 1 || isPaused) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % filteredReviews.length);
     }, 7000);
     return () => clearInterval(interval);
-  }, [filteredReviews.length]);
+  }, [filteredReviews.length, isPaused]);
+
+  useEffect(() => {
+    return () => {
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+    };
+  }, []);
 
   const prevReview = () => {
     setCurrentIndex((prev) =>
@@ -130,7 +138,8 @@ export default function ReviewsSection({ initialData }: ReviewsSectionProps) {
       setSyncMessage("Could not contact sync server; showing latest cache.");
     } finally {
       setIsSyncing(false);
-      setTimeout(() => setSyncMessage(null), 4000);
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+      syncTimerRef.current = setTimeout(() => setSyncMessage(null), 4000);
     }
   };
 
@@ -191,6 +200,7 @@ export default function ReviewsSection({ initialData }: ReviewsSectionProps) {
                       src="/images/single-star.svg"
                       alt="Trustpilot star logo"
                       fill
+                      sizes="28px"
                       className="object-contain"
                     />
                   </div>
@@ -342,148 +352,170 @@ export default function ReviewsSection({ initialData }: ReviewsSectionProps) {
         {/* Interactive Themed Review Showcase */}
         {currentReview && (
           <div
-            className={`max-w-4xl mx-auto relative rounded-3xl p-7 sm:p-11 shadow-xl transition-all duration-300 border-2 ${
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onFocus={() => setIsPaused(true)}
+            onBlur={() => setIsPaused(false)}
+            className={`max-w-4xl mx-auto relative rounded-3xl p-6 sm:p-9 lg:p-11 shadow-xl transition-colors duration-300 border-2 flex flex-col justify-between min-h-[460px] sm:min-h-[420px] lg:min-h-[400px] ${
               currentReview.source === "Trustpilot"
                 ? "bg-white border-[#00b67a]/30 shadow-[#00b67a]/5"
                 : "bg-white border-emerald-500/30 shadow-emerald-500/5"
             }`}
           >
-            {/* Top Badge: Review Source & Verification */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-5 border-b border-gray-100">
-              <div className="flex items-center gap-2.5">
-                {currentReview.source === "Trustpilot" ? (
-                  <span className="inline-flex items-center gap-1.5 bg-[#00b67a] text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-xs">
-                    <span className="text-white text-[11px]">★</span>
-                    Trustpilot Review
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5 bg-[#13c265] text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-xs">
-                    <span className="text-white text-[11px]">★</span>
-                    Getamover Review
-                  </span>
-                )}
+            {/* Top Container: Header, Stars, Headline & Body */}
+            <div>
+              {/* Top Badge: Review Source & Verification */}
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-2.5">
+                  {currentReview.source === "Trustpilot" ? (
+                    <span className="inline-flex items-center gap-1.5 bg-[#00b67a] text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-xs">
+                      <span className="text-white text-[11px]">★</span>
+                      Trustpilot Review
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 bg-[#13c265] text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-xs">
+                      <span className="text-white text-[11px]">★</span>
+                      Getamover Review
+                    </span>
+                  )}
 
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  Verified Customer Move
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    Verified Customer Move
+                  </span>
+                </div>
+
+                <div className="text-xs text-muted font-medium">
+                  {currentReview.date}
+                </div>
+              </div>
+
+              {/* Stars & Counter */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                <div className="flex items-center gap-3">
+                  {currentReview.source === "Trustpilot" ? (
+                    <TrustpilotStarRating rating={currentReview.rating} size="md" />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <GetamoverStarRating rating={currentReview.rating} />
+                      {currentReview.ratingOutOf10 && (
+                        <span className="bg-emerald-50 text-emerald-800 text-xs font-extrabold px-2 py-0.5 rounded-md border border-emerald-200">
+                          {currentReview.ratingOutOf10} / 10
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <span className="text-xs font-bold text-gray-400">
+                  Review {currentIndex + 1} of {filteredReviews.length}
                 </span>
               </div>
 
-              <div className="text-xs text-muted font-medium">
-                {currentReview.date}
-              </div>
-            </div>
-
-            {/* Stars & Headline */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div className="flex items-center gap-3">
-                {currentReview.source === "Trustpilot" ? (
-                  <TrustpilotStarRating rating={currentReview.rating} size="md" />
+              {/* Headline */}
+              <div className="min-h-[28px] mb-2 flex items-center">
+                {currentReview.headline ? (
+                  <h3 className="text-lg sm:text-xl font-bold text-navy-900 tracking-tight line-clamp-1">
+                    {currentReview.headline}
+                  </h3>
                 ) : (
-                  <div className="flex items-center gap-2">
-                    <GetamoverStarRating rating={currentReview.rating} />
-                    {currentReview.ratingOutOf10 && (
-                      <span className="bg-emerald-50 text-emerald-800 text-xs font-extrabold px-2 py-0.5 rounded-md border border-emerald-200">
-                        {currentReview.ratingOutOf10} / 10
-                      </span>
-                    )}
-                  </div>
+                  <span className="text-lg sm:text-xl font-bold text-navy-900 tracking-tight">
+                    Verified Customer Experience
+                  </span>
                 )}
               </div>
 
-              <span className="text-xs font-bold text-gray-400">
-                Review {currentIndex + 1} of {filteredReviews.length}
-              </span>
-            </div>
-
-            {/* Headline */}
-            {currentReview.headline && (
-              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-3 tracking-tight">
-                {currentReview.headline}
-              </h3>
-            )}
-
-            {/* Review Body */}
-            <div className="relative mb-6">
-              <Quote className="w-10 h-10 text-gold/15 absolute -top-3 -left-3 pointer-events-none" />
-              <p className="text-base sm:text-lg font-normal text-navy-900/90 italic leading-relaxed pl-2 relative z-10">
-                &ldquo;{currentReview.text}&rdquo;
-              </p>
-            </div>
-
-            {/* Author */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm shadow-xs ${
-                    currentReview.source === "Trustpilot"
-                      ? "bg-[#00b67a]"
-                      : "bg-[#13c265]"
-                  }`}
-                >
-                  {currentReview.author.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <h4 className="font-bold text-navy-900 text-base leading-tight">
-                    {currentReview.author}
-                  </h4>
-                  <p className="text-xs text-muted font-medium">
-                    Verified Customer via {currentReview.source}
+              {/* Review Body (Stable Height with smooth scroll when needed) */}
+              <div className="relative my-2">
+                <Quote className="w-10 h-10 text-gold/15 absolute -top-3 -left-3 pointer-events-none" />
+                <div className="min-h-[110px] sm:min-h-[96px] max-h-[160px] overflow-y-auto pr-1">
+                  <p className="text-base sm:text-lg font-normal text-navy-900/90 italic leading-relaxed pl-2 relative z-10">
+                    &ldquo;{currentReview.text}&rdquo;
                   </p>
                 </div>
               </div>
-
-              {/* Quick source link */}
-              <a
-                href={
-                  currentReview.source === "Trustpilot"
-                    ? data.trustpilot.profileUrl
-                    : data.getamover.profileUrl
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-semibold text-gray-500 hover:text-navy-900 inline-flex items-center gap-1 transition-colors"
-              >
-                <span>View on {currentReview.source}</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
             </div>
 
-            {/* Carousel Navigation Controls */}
-            <div className="flex items-center justify-between mt-8 pt-5 border-t border-gray-100">
-              <button
-                onClick={prevReview}
-                className="w-10 h-10 rounded-full bg-white hover:bg-gold hover:text-navy-950 text-navy-900 border border-gray-200 flex items-center justify-center shadow-xs hover:shadow-md transition-all"
-                aria-label="Previous review"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              {/* Dot Indicators */}
-              <div className="flex items-center gap-1.5 flex-wrap justify-center max-w-[200px] sm:max-w-md">
-                {filteredReviews.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 rounded-full transition-all ${
-                      idx === currentIndex
-                        ? currentReview.source === "Trustpilot"
-                          ? "w-7 bg-[#00b67a]"
-                          : "w-7 bg-[#13c265]"
-                        : "w-2 bg-gray-300 hover:bg-gray-400"
+            {/* Bottom Container: Fixed Author & Stable Navigation Bar */}
+            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-4">
+              {/* Author & External link */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm shadow-xs shrink-0 ${
+                      currentReview.source === "Trustpilot"
+                        ? "bg-[#00b67a]"
+                        : "bg-[#13c265]"
                     }`}
-                    aria-label={`Go to review ${idx + 1}`}
-                  />
-                ))}
+                  >
+                    {currentReview.author.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-navy-900 text-base leading-tight">
+                      {currentReview.author}
+                    </h4>
+                    <p className="text-xs text-muted font-medium">
+                      Verified Customer via {currentReview.source}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quick source link */}
+                <a
+                  href={
+                    currentReview.source === "Trustpilot"
+                      ? data.trustpilot.profileUrl
+                      : data.getamover.profileUrl
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-semibold text-gray-500 hover:text-navy-900 inline-flex items-center gap-1 transition-colors"
+                >
+                  <span className="hidden sm:inline">View on {currentReview.source}</span>
+                  <span className="sm:hidden">{currentReview.source}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
 
-              <button
-                onClick={nextReview}
-                className="w-10 h-10 rounded-full bg-white hover:bg-gold hover:text-navy-950 text-navy-900 border border-gray-200 flex items-center justify-center shadow-xs hover:shadow-md transition-all"
-                aria-label="Next review"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              {/* Carousel Navigation Controls (Locked in fixed bottom position) */}
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100/70">
+                <button
+                  type="button"
+                  onClick={prevReview}
+                  className="w-10 h-10 rounded-full bg-white hover:bg-gold hover:text-navy-950 text-navy-900 border border-gray-200 flex items-center justify-center shadow-xs hover:shadow-md transition-all active:scale-95"
+                  aria-label="Previous review"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Dot Indicators */}
+                <div className="flex items-center gap-1.5 flex-wrap justify-center max-w-[200px] sm:max-w-md">
+                  {filteredReviews.map((_, idx) => (
+                    <button
+                      type="button"
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-2 rounded-full transition-all ${
+                        idx === currentIndex
+                          ? currentReview.source === "Trustpilot"
+                            ? "w-7 bg-[#00b67a]"
+                            : "w-7 bg-[#13c265]"
+                          : "w-2 bg-gray-300 hover:bg-gray-400"
+                      }`}
+                      aria-label={`Go to review ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={nextReview}
+                  className="w-10 h-10 rounded-full bg-white hover:bg-gold hover:text-navy-950 text-navy-900 border border-gray-200 flex items-center justify-center shadow-xs hover:shadow-md transition-all active:scale-95"
+                  aria-label="Next review"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         )}

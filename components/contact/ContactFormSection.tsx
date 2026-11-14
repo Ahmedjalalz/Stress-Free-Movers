@@ -14,6 +14,7 @@ export default function ContactFormSection() {
     email: "",
     phone: "",
     notes: "",
+    website: "",
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -105,6 +106,7 @@ export default function ContactFormSection() {
                         email: "",
                         phone: "",
                         notes: "",
+                        website: "",
                       });
                     }}
                     className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#121F36] text-white text-sm font-semibold hover:bg-[#C7A567] transition-colors shadow-sm"
@@ -114,6 +116,20 @@ export default function ContactFormSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                  {/* Honeypot field for bot protection */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="contact-website">Website</label>
+                    <input
+                      id="contact-website"
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleChange}
+                    />
+                  </div>
+
                   {/* Service Type Select */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#121F36] mb-1.5">

@@ -1,40 +1,46 @@
 "use client";
 import React, { useRef, useEffect } from "react";
+import Image from "next/image";
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {
-        // Autoplay policy prevented playback, poster acts as seamless fallback
+    const video = videoRef.current;
+    if (video) {
+      video.defaultMuted = true;
+      video.muted = true;
+      video.play().catch(() => {
+        // Autoplay policy prevented playback, priority Image acts as seamless fallback
       });
     }
   }, []);
 
   return (
     <section className="relative overflow-hidden w-full min-h-[88vh] max-sm:min-h-[60vh] bg-[#0C1726] flex items-center justify-center pt-[80px] pb-[140px] sm:pt-[100px] sm:pb-[190px] px-4 sm:px-6 lg:px-8">
-      {/* 1. Background Video Container */}
+      {/* 1. Background Poster (LCP-optimized) + Video Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <Image
+          src="/images/relocation-bg.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
         <video
           ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/images/relocation-bg.jpg"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover max-w-none"
           role="presentation"
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
           <source src="/videos/hero.mov" type="video/quicktime" />
-          <source
-            src="https://stressfreemoveltd.co.uk/wp-content/uploads/2026/08/woman-unpacking-boxes-with-delivery-man-2025-12-17-12-17-31-utc.mov"
-            type="video/mp4"
-          />
         </video>
       </div>
 

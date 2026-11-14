@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
 import {
   Home,
   Building2,
@@ -17,57 +17,57 @@ import {
 export const services = [
   {
     title: "House Removals",
+    slug: "house-removals",
     desc: "Full home moves for flats, houses and large properties, handled door to door by an experienced crew.",
-    iconImg: "/images/home.png",
-    fallbackIcon: Home,
+    icon: Home,
   },
   {
     title: "Office Removal",
+    slug: "office-removals",
     desc: "Planned commercial moves designed around your operating hours to keep downtime to an absolute minimum.",
-    iconImg: null,
-    fallbackIcon: Building2,
+    icon: Building2,
   },
   {
     title: "Storage Solution",
+    slug: "storage-solutions",
     desc: "Short-term and long-term storage for furniture and boxes when your dates don't line up perfectly.",
-    iconImg: "/images/package.png",
-    fallbackIcon: Package,
+    icon: Package,
   },
   {
     title: "Man & Van Services",
+    slug: "man-van-moving",
     desc: "Flexible, affordable help for small moves, single items, student moves and last-minute jobs.",
-    iconImg: "/images/transport.png",
-    fallbackIcon: Truck,
+    icon: Truck,
   },
   {
     title: "Packing and Moving",
-    desc: "One sofa, one wardrobe, one appliance — collected and delivered without paying for a full removal.",
-    iconImg: "/images/package.png",
-    fallbackIcon: Boxes,
+    slug: "packing-and-moving",
+    desc: "Full or partial packing using quality boxes, bubble wrap, tissue and tape, with everything clearly labelled.",
+    icon: Boxes,
   },
   {
     title: "Loading & Unloading Solutions",
-    desc: "Full or partial packing using quality boxes, bubble wrap, tissue and tape, with everything clearly labelled.",
-    iconImg: "/images/transport.png",
-    fallbackIcon: Layers,
+    slug: "loading-unloading-solutions",
+    desc: "Trained movers to safely load, secure and unload your hire van, container or storage unit with care.",
+    icon: Layers,
   },
   {
     title: "Local Moving",
-    desc: "Boxes, wrap, covers and tape delivered to your door if you'd prefer to pack yourself.",
-    iconImg: "/images/home.png",
-    fallbackIcon: MapPin,
+    slug: "local-moving",
+    desc: "Fast, reliable same-day and short-distance moves across Croydon, London and surrounding areas.",
+    icon: MapPin,
   },
   {
     title: "Long Distance & Nationwide Moves",
+    slug: "long-distance-nationwide-moves",
     desc: "Cross-country relocations planned end to end, including overnight and multi-drop journeys.",
-    iconImg: null,
-    fallbackIcon: Navigation,
+    icon: Navigation,
   },
   {
     title: "Piano Removals",
-    desc: "Short-term and long-term storage for furniture and boxes when your dates don't line up perfectly.",
-    iconImg: null,
-    fallbackIcon: Music,
+    slug: "piano-removals",
+    desc: "Specialist upright and grand piano transport using protective covers, skids and trained handlers.",
+    icon: Music,
   },
 ];
 
@@ -91,8 +91,8 @@ export default function ServicesGrid() {
 
         {/* 9 Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const Icon = service.fallbackIcon;
+          {services.map((service) => {
+            const Icon = service.icon;
             return (
               <div
                 key={service.title}
@@ -100,19 +100,8 @@ export default function ServicesGrid() {
               >
                 <div>
                   {/* Icon Header */}
-                  <div className="w-14 h-14 rounded-2xl bg-cream border border-gold/25 flex items-center justify-center mb-6 group-hover:bg-gold/15 group-hover:scale-105 transition-all">
-                    {service.iconImg ? (
-                      <div className="relative w-7 h-7">
-                        <Image
-                          src={service.iconImg}
-                          alt={service.title}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                    ) : (
-                      <Icon className="w-7 h-7 text-gold" />
-                    )}
+                  <div className="w-14 h-14 rounded-2xl bg-cream border border-gold/30 flex items-center justify-center mb-6 text-gold group-hover:bg-[#121F36] group-hover:text-gold group-hover:border-[#121F36] group-hover:scale-105 transition-all duration-300 shadow-xs">
+                    <Icon className="w-7 h-7 stroke-[1.9] transition-transform duration-300 group-hover:scale-110" />
                   </div>
 
                   {/* Title & Description */}
@@ -126,13 +115,19 @@ export default function ServicesGrid() {
 
                 {/* Card CTA Link */}
                 <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-navy-900 group-hover:text-gold uppercase tracking-wider">
-                  <span>Book this service</span>
-                  <a
-                    href="#quote-form"
+                  <Link
+                    href={`/${service.slug}`}
+                    className="hover:underline"
+                  >
+                    Explore service
+                  </Link>
+                  <Link
+                    href={`/${service.slug}`}
+                    aria-label={`Explore ${service.title}`}
                     className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gold group-hover:text-navy-950 transition-colors"
                   >
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             );
