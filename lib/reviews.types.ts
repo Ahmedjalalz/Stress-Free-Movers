@@ -36,16 +36,27 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
   lastSyncedAt: new Date().toISOString(),
   nextSyncAt: new Date(Date.now() + SYNC_INTERVAL_MS).toISOString(),
   syncIntervalDays: 2,
-  totalReviews: 23,
+  totalReviews: 24,
   averageRating: 4.9,
   getamover: {
     score: "9.9",
-    reviewCount: 9,
+    reviewCount: 10,
     profileUrl:
       "https://www.getamover.co.uk/movers/LzW1A/stress-free-move-limited/?utm_source=widget&utm_medium=referral",
     reviews: [
       {
         id: "gam-1",
+        author: "Michael",
+        headline: "Pleasant",
+        date: "17 Nov 2026",
+        rating: 5,
+        ratingOutOf10: 10,
+        text: "Quick and polite. Good follow up.",
+        source: "Getamover",
+        verified: true,
+      },
+      {
+        id: "gam-2",
         author: "Elaine",
         headline: "Helpful and friendly people",
         date: "11 Nov 2026",
@@ -56,7 +67,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-2",
+        id: "gam-3",
         author: "Nathanel Femi",
         headline: "Excellent service",
         date: "10 Nov 2026",
@@ -67,7 +78,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-3",
+        id: "gam-4",
         author: "Andrew",
         headline: "Highly recommended",
         date: "31 Oct 2026",
@@ -78,7 +89,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-4",
+        id: "gam-5",
         author: "Matthew",
         headline: "Quick, careful and efficient",
         date: "31 Oct 2026",
@@ -89,7 +100,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-5",
+        id: "gam-6",
         author: "Bri",
         headline: "Amazing to work with",
         date: "27 Oct 2026",
@@ -100,7 +111,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-6",
+        id: "gam-7",
         author: "Jennifer",
         headline: "Truly a stress-free experience",
         date: "25 Oct 2026",
@@ -111,7 +122,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-7",
+        id: "gam-8",
         author: "Sandra",
         headline: "5 Star plus service",
         date: "22 Oct 2026",
@@ -122,7 +133,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-8",
+        id: "gam-9",
         author: "Samiha",
         headline: "Prompt and clear communication",
         date: "14 Oct 2026",
@@ -133,7 +144,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
         verified: true,
       },
       {
-        id: "gam-9",
+        id: "gam-10",
         author: "Amanda",
         headline: "Very helpful and careful",
         date: "13 Oct 2026",
