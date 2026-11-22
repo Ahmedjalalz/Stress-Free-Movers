@@ -1,5 +1,5 @@
 {
-  "lastSyncedAt": "2026-11-22T18:50:00.000Z",
+  "lastSyncedAt": "2026-11-22T19:05:00.000Z",
   "getamover": {
     "score": "9.9",
     "reviewCount": 10,
@@ -118,13 +118,90 @@
     ]
   },
   "trustpilot": {
-    "score": "4.5",
-    "reviewCount": 14,
+    "score": "4.6",
+    "reviewCount": 21,
     "profileUrl": "https://uk.trustpilot.com/review/stressfreemoveltd.co.uk",
     "evaluateUrl": "https://uk.trustpilot.com/evaluate/stressfreemoveltd.co.uk",
     "reviews": [
       {
         "id": "tp-1",
+        "author": "will brennan",
+        "headline": "Brilliant movers very efficient and…",
+        "date": "21 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Brilliant movers very efficient and professional. Moved very well from a 5th floor flat with tricky parking. Stress free!",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-2",
+        "author": "Genni Laporta",
+        "headline": "Really great service",
+        "date": "21 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Really great service, easy and friendly! Fifth floor flat moving to house, really good help with packing and no trouble at all. Thank you",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-3",
+        "author": "mehak Amir",
+        "headline": "My overall experience was amazing with…",
+        "date": "20 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "My overall experience was amazing with stress free move, they were extremely cooperative with the entire process and kept me posted at all times. They were also incredibly accommodating. Safe drive too. Would a 100% recommend ✨",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-4",
+        "author": "Hina Zahid",
+        "headline": "Good customer service",
+        "date": "20 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Good customer service. I am really happy and will recommend.",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-5",
+        "author": "Consumer",
+        "headline": "Great guys",
+        "date": "16 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Great guys! Amazing service and fast worker",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-6",
+        "author": "Nikka Mae Vallo",
+        "headline": "Amazing!!",
+        "date": "16 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Amazing, will definitely recommend them. Very quick and the guys were very kind. Their service is top tier!",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-7",
+        "author": "Media Relations Event Manageme",
+        "headline": "Very good service",
+        "date": "14 Nov 2026",
+        "rating": 5,
+        "ratingOutOf10": 10,
+        "text": "Very good service. I recommend this company to allVery reasonable price.Ali and Mr. Khan was very helpful.👍",
+        "source": "Trustpilot",
+        "verified": true
+      },
+      {
+        "id": "tp-8",
         "author": "Sadek Al Rikaby",
         "headline": "Very good and expert",
         "date": "14 Nov 2026",
@@ -135,7 +212,7 @@
         "verified": true
       },
       {
-        "id": "tp-2",
+        "id": "tp-9",
         "author": "David Miedzianogora",
         "headline": "Ali was great and very helpful",
         "date": "10 Nov 2026",
@@ -146,7 +223,7 @@
         "verified": true
       },
       {
-        "id": "tp-3",
+        "id": "tp-10",
         "author": "Nj Sofia",
         "headline": "Stressfreemove was an amazing company…",
         "date": "31 Oct 2026",
@@ -157,7 +234,7 @@
         "verified": true
       },
       {
-        "id": "tp-4",
+        "id": "tp-11",
         "author": "Chi",
         "headline": "Very good service",
         "date": "1 Nov 2026",
@@ -168,7 +245,7 @@
         "verified": true
       },
       {
-        "id": "tp-5",
+        "id": "tp-12",
         "author": "Dan Pearson",
         "headline": "Very accommodating service",
         "date": "31 Oct 2026",
@@ -179,7 +256,7 @@
         "verified": true
       },
       {
-        "id": "tp-6",
+        "id": "tp-13",
         "author": "Andrew Noonan",
         "headline": "Moved from house to flat with no log…",
         "date": "31 Oct 2026",
@@ -190,7 +267,7 @@
         "verified": true
       },
       {
-        "id": "tp-7",
+        "id": "tp-14",
         "author": "Malia",
         "headline": "Quick and easy move",
         "date": "30 Oct 2026",
@@ -201,7 +278,7 @@
         "verified": true
       },
       {
-        "id": "tp-8",
+        "id": "tp-15",
         "author": "Matthew Williams",
         "headline": "Great job",
         "date": "30 Oct 2026",
@@ -212,7 +289,7 @@
         "verified": true
       },
       {
-        "id": "tp-9",
+        "id": "tp-16",
         "author": "Mark",
         "headline": "Incredibly stress free as the name…",
         "date": "29 Oct 2026",
@@ -223,7 +300,7 @@
         "verified": true
       },
       {
-        "id": "tp-10",
+        "id": "tp-17",
         "author": "Punky C",
         "headline": "Great service!!",
         "date": "17 Oct 2026",
@@ -234,7 +311,7 @@
         "verified": true
       },
       {
-        "id": "tp-11",
+        "id": "tp-18",
         "author": "Jenny Nichols-Dunbar",
         "headline": "Wonderful experience",
         "date": "24 Oct 2026",
@@ -245,7 +322,7 @@
         "verified": true
       },
       {
-        "id": "tp-12",
+        "id": "tp-19",
         "author": "J Nichols-Dunbar",
         "headline": "Absolutely wonderful and excellent…",
         "date": "24 Oct 2026",
@@ -256,7 +333,7 @@
         "verified": true
       },
       {
-        "id": "tp-13",
+        "id": "tp-20",
         "author": "Brittany Perry",
         "headline": "They were amazing!!",
         "date": "22 Oct 2026",
@@ -267,7 +344,7 @@
         "verified": true
       },
       {
-        "id": "tp-14",
+        "id": "tp-21",
         "author": "SANDRA WOODARDS",
         "headline": "Excellent service by two movers who…",
         "date": "22 Oct 2026",
