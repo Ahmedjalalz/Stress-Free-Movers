@@ -36,7 +36,7 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
   lastSyncedAt: new Date().toISOString(),
   nextSyncAt: new Date(Date.now() + SYNC_INTERVAL_MS).toISOString(),
   syncIntervalDays: 2,
-  totalReviews: 31,
+  totalReviews: 32,
   averageRating: 4.9,
   getamover: {
     score: "9.9",
@@ -158,12 +158,23 @@ export const DEFAULT_REVIEWS_DATA: ReviewsData = {
   },
   trustpilot: {
     score: "4.6",
-    reviewCount: 21,
+    reviewCount: 22,
     profileUrl: "https://uk.trustpilot.com/review/stressfreemoveltd.co.uk",
     evaluateUrl: "https://uk.trustpilot.com/evaluate/stressfreemoveltd.co.uk",
     reviews: [
       {
         id: "tp-1",
+        author: "Andrew Lishomwa",
+        headline: "Speedy",
+        date: "22 Nov 2026",
+        rating: 5,
+        ratingOutOf10: 10,
+        text: "Speedy, friendly and courteous",
+        source: "Trustpilot",
+        verified: true,
+      },
+      {
+        id: "tp-2",
         author: "will brennan",
         headline: "Brilliant movers very efficient and…",
         date: "21 Nov 2026",
