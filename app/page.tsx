@@ -23,9 +23,6 @@ export default async function Home() {
       {/* Exact Hero Section with Video */}
       <Hero />
 
-      {/* Reviews, Ratings & Verified Testimonials (Moved directly after Hero) */}
-      <ReviewsSection initialData={reviewsData} />
-
       {/* Moving Made Simple From Start to Finish (Overlapping photos & checklist) */}
       <MovingMadeSimple />
 
@@ -43,6 +40,9 @@ export default async function Home() {
 
       {/* Let's Take Care of Your Business Challenges (Quote Form) */}
       <QuoteForm />
+
+      {/* Reviews, Ratings & Verified Testimonials */}
+      <ReviewsSection initialData={reviewsData} />
 
       {/* Footer */}
       <Footer />
